@@ -1,0 +1,123 @@
+title Conservation of Momentum
+author Menderbug
+homepage menderbug.itch.io
+
+========
+OBJECTS
+========
+
+Background 
+GREEN  
+
+Target 
+DarkBlue    
+
+Wall 
+BROWN
+
+Player 
+Blue   
+
+Crate 
+Orange darkbrown
+11111
+10001
+10001
+10001
+11111
+
+MomentumR
+transparent
+
+MomentumL
+transparent
+
+MomentumU
+transparent
+
+MomentumD
+transparent
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = Player
+* = Crate
+@ = Crate and Target
+O = Target
+
+Momentum = MomentumR or MomentumL or MomentumU or MomentumD
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Target
+Player, Wall, Crate
+Momentum
+
+======
+RULES     
+======     
+
+( Player can push one more crates )
+[ > Player | Crate ] -> [ > Player | > Crate ]
+[ > Crate | Crate ] -> [ > Crate | > Crate ]
+
+( Recover crate movement from existing momentum )
+[ Crate MomentumR ] -> [ right Crate MomentumR ]
+[ Crate MomentumL ] -> [ left Crate MomentumL ]
+[ Crate MomentumU ] -> [ up Crate MomentumU ]
+[ Crate MomentumD ] -> [ down Crate MomentumD ]
+
+( Add momentum to moving crates )
+[ right Crate ] -> [ right Crate right MomentumR ]
+[ left Crate ] -> [ left Crate left MomentumL ]
+[ up Crate ] -> [ up Crate up MomentumU ]
+[ down Crate ] -> [ down Crate down MomentumD ]
+
+(############ late rules ############)
+
+( Transfer momentum through stationary crates, a la Newton's Cradle )
+late right [ Crate MomentumR | Crate no Momentum ] -> [ Crate | Crate MomentumR ]
+late left [ Crate MomentumL | Crate no Momentum ] -> [ Crate | Crate MomentumL ]
+late up [ Crate MomentumU | Crate no Momentum ] -> [ Crate | Crate MomentumU ]
+late down [ Crate MomentumD | Crate no Momentum ] -> [ Crate | Crate MomentumD ]
+
+( Walls absorb momentum )
+late right [ MomentumR | Wall ] -> [ | Wall ]
+late left [ MomentumL | Wall ] -> [ | Wall ]
+late up [ MomentumU | Wall ] -> [ | Wall ]
+late down [ MomentumD | Wall ] -> [ | Wall ]
+
+late [ Momentum ] -> [ Momentum ] again
+
+==============
+WINCONDITIONS
+==============
+
+All Target on Crate   
+
+=======     
+LEVELS
+=======
+
+#########
+#.......#
+#.....@.#
+#.P.*.O.#
+#.......#
+#.......#
+#########
+
+########################
+#O.P..*...**...*...**..#
+########################
