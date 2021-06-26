@@ -10,13 +10,16 @@ Background
 GREEN
 
 Target
-DarkBlue
+Purple
 
 Wall
 BROWN
 
 Player
 Blue
+
+Pit
+Black
 
 WoodenCrate
 Orange darkbrown
@@ -26,6 +29,22 @@ Orange darkbrown
 10001
 11111
 
+FallingWoodenCrate1
+Orange darkbrown
+.....
+.111.
+.101.
+.111.
+.....
+
+FallingWoodenCrate2
+Orange darkbrown
+.....
+.....
+..1..
+.....
+.....
+
 MetalCrate
 Gray Darkgray
 11111
@@ -33,6 +52,22 @@ Gray Darkgray
 10001
 10001
 11111
+
+FallingMetalCrate1
+Gray Darkgray
+.....
+.111.
+.101.
+.111.
+.....
+
+FallingMetalCrate2
+Gray Darkgray
+.....
+.....
+..1..
+.....
+.....
 
 ( The numbers are units )
 Momentum1R
@@ -64,6 +99,7 @@ LEGEND
 =======
 
 . = Background
+_ = Pit
 # = Wall
 P = Player
 * = WoodenCrate
@@ -73,6 +109,10 @@ O = Target
 Crate = WoodenCrate or MetalCrate
 Crate1 = Crate
 Crate2 = Crate
+
+FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2
+FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2
+FallingCrate = FallingWoodenCrate or FallingMetalCrate
 
 Momentum1 = Momentum1R or Momentum1L or Momentum1U or Momentum1D
 Momentum2 = Momentum2R or Momentum2L or Momentum2U or Momentum2D
@@ -91,6 +131,8 @@ COLLISIONLAYERS
 ================
 
 Background
+Pit
+FallingCrate
 Target
 Player, Wall, Crate
 Momentum
@@ -149,7 +191,18 @@ late down [ MomentumD | Wall ] -> [ | Wall ]
 ( Metal crates require two units of momentum to keep move. )
 late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
 
-( If any momentum is left, run another turn )
+( Drop crates into pits. )
+late [ FallingWoodenCrate2 ] -> [ ]
+late [ FallingWoodenCrate1 Pit ] -> [ FallingWoodenCrate2 Pit ] again
+late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
+late [ FallingMetalCrate2 ] -> [ ]
+late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
+late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
+
+( Remove stray momentum. )
+late [ Momentum no Crate ] -> [ ]
+
+( If any momentum is left, run another turn. )
 late [ Momentum ] -> [ Momentum ] again
 
 ==============
@@ -173,5 +226,5 @@ LEVELS
 ##########
 
 ########################
-#O.P..x*..x***.x...**..#
+#O.P..x...x***.x._**...#
 ########################
