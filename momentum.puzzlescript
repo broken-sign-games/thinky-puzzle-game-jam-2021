@@ -166,29 +166,28 @@ RULES
 (############ late rules ############)
 
 ( Transfer momentum through stationary crates, a la Newton's Cradle.
-  Metal crates can store two units of momentum. )  
+  Metal crates can store two units of momentum.
+  Walls absorb momentum. )  
 late right [ Crate1 Momentum1R | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1R ]
 + late right [ Crate Momentum1R | MetalCrate Momentum1R ] -> [ Crate | MetalCrate Momentum2R ]
 + late right [ MetalCrate Momentum2R | Crate no Momentum ] -> [ MetalCrate Momentum1R | Crate Momentum1R ]
 + late right [ MetalCrate Momentum2R | MetalCrate Momentum1R ] -> [ MetalCrate Momentum1R | MetalCrate Momentum2R ]
++ late right [ Crate MomentumR | Wall ] -> [ Crate | Wall ]
 late left [ Crate1 Momentum1L | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1L ]
 + late left [ Crate Momentum1L | MetalCrate Momentum1L ] -> [ Crate | MetalCrate Momentum2L ]
 + late left [ MetalCrate Momentum2L | Crate no Momentum ] -> [ MetalCrate Momentum1L | Crate Momentum1L ]
 + late left [ MetalCrate Momentum2L | MetalCrate Momentum1L ] -> [ MetalCrate Momentum1L | MetalCrate Momentum2L ]
++ late left [ Crate MomentumL | Wall ] -> [ Crate | Wall ]
 late up [ Crate1 Momentum1U | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1U ]
 + late up [ Crate Momentum1U | MetalCrate Momentum1U ] -> [ Crate | MetalCrate Momentum2U ]
 + late up [ MetalCrate Momentum2U | Crate no Momentum ] -> [ MetalCrate Momentum1U | Crate Momentum1U ]
 + late up [ MetalCrate Momentum2U | MetalCrate Momentum1U ] -> [ MetalCrate Momentum1U | MetalCrate Momentum2U ]
++ late up [ Crate MomentumU | Wall ] -> [ Crate | Wall ]
 late down [ Crate1 Momentum1D | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1D ]
 + late down [ Crate Momentum1D | MetalCrate Momentum1D ] -> [ Crate | MetalCrate Momentum2D ]
 + late down [ MetalCrate Momentum2D | Crate no Momentum ] -> [ MetalCrate Momentum1D | Crate Momentum1D ]
 + late down [ MetalCrate Momentum2D | MetalCrate Momentum1D ] -> [ MetalCrate Momentum1D | MetalCrate Momentum2D ]
-
-( Walls absorb momentum. )
-late right [ MomentumR | Wall ] -> [ | Wall ]
-late left [ MomentumL | Wall ] -> [ | Wall ]
-late up [ MomentumU | Wall ] -> [ | Wall ]
-late down [ MomentumD | Wall ] -> [ | Wall ]
++ late down [ Crate MomentumD | Wall ] -> [ Crate | Wall ]
 
 ( Metal crates require two units of momentum to keep moving. )
 late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
@@ -246,6 +245,29 @@ LEVELS
 ######...##
 ###########
 
+###########
+###......##
+#..*.o.*.##
+#.........#
+##.*.o.p..#
+##......###
+###########
+
+#########
+#....o..#
+#.###o#.#
+#.###...#
+#.**..p##
+####...##
+#########
+
+###########
+###......o#
+#........o#
+#.p.***..o#
+#.......###
+###########
+
 ########################
-#O.P..x...x***.x._**...#
+#O.P..***.****.*._.*...#
 ########################
