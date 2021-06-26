@@ -6,19 +6,19 @@ homepage menderbug.itch.io
 OBJECTS
 ========
 
-Background 
-GREEN  
+Background
+GREEN
 
-Target 
-DarkBlue    
+Target
+DarkBlue
 
-Wall 
+Wall
 BROWN
 
-Player 
-Blue   
+Player
+Blue
 
-WoodenCrate 
+WoodenCrate
 Orange darkbrown
 11111
 10001
@@ -34,16 +34,29 @@ Gray Darkgray
 10001
 11111
 
-MomentumR
+( The numbers are units )
+Momentum1R
 transparent
 
-MomentumL
+Momentum1L
 transparent
 
-MomentumU
+Momentum1U
 transparent
 
-MomentumD
+Momentum1D
+transparent
+
+Momentum2R
+transparent
+
+Momentum2L
+transparent
+
+Momentum2U
+transparent
+
+Momentum2D
 transparent
 
 =======
@@ -61,7 +74,13 @@ Crate = WoodenCrate or MetalCrate
 Crate1 = Crate
 Crate2 = Crate
 
-Momentum = MomentumR or MomentumL or MomentumU or MomentumD
+Momentum1 = Momentum1R or Momentum1L or Momentum1U or Momentum1D
+Momentum2 = Momentum2R or Momentum2L or Momentum2U or Momentum2D
+MomentumR = Momentum1R or Momentum2R
+MomentumL = Momentum1L or Momentum2L
+MomentumU = Momentum1U or Momentum2U
+MomentumD = Momentum1D or Momentum2D
+Momentum = Momentum1 or Momentum2
 
 =======
 SOUNDS
@@ -77,38 +96,58 @@ Player, Wall, Crate
 Momentum
 
 ======
-RULES     
-======     
+RULES
+======
 
-( Player can push one more crates )
+( Player can push one more crates. )
 [ > Player | Crate ] -> [ > Player | > Crate ]
 [ > Crate1 | Crate2 ] -> [ > Crate1 | > Crate2 ]
 
-( Recover crate movement from existing momentum )
+( Recover crate movement from existing momentum. )
 [ Crate MomentumR ] -> [ right Crate MomentumR ]
 [ Crate MomentumL ] -> [ left Crate MomentumL ]
 [ Crate MomentumU ] -> [ up Crate MomentumU ]
 [ Crate MomentumD ] -> [ down Crate MomentumD ]
 
-( Add momentum to moving crates )
-[ right Crate ] -> [ right Crate right MomentumR ]
-[ left Crate ] -> [ left Crate left MomentumL ]
-[ up Crate ] -> [ up Crate up MomentumU ]
-[ down Crate ] -> [ down Crate down MomentumD ]
+( Add momentum to moving crates. )
+[ right WoodenCrate ] -> [ right WoodenCrate right Momentum1R ]
+[ left WoodenCrate ] -> [ left WoodenCrate left Momentum1L ]
+[ up WoodenCrate ] -> [ up WoodenCrate up Momentum1U ]
+[ down WoodenCrate ] -> [ down WoodenCrate down Momentum1D ]
+[ right MetalCrate ] -> [ right MetalCrate right Momentum2R ]
+[ left MetalCrate ] -> [ left MetalCrate left Momentum2L ]
+[ up MetalCrate ] -> [ up MetalCrate up Momentum2U ]
+[ down MetalCrate ] -> [ down MetalCrate down Momentum2D ]
 
 (############ late rules ############)
 
-( Transfer momentum through stationary crates, a la Newton's Cradle )
-late right [ Crate1 MomentumR | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumR ]
-late left [ Crate1 MomentumL | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumL ]
-late up [ Crate1 MomentumU | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumU ]
-late down [ Crate1 MomentumD | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumD ]
+( Transfer momentum through stationary crates, a la Newton's Cradle.
+  Metal crates can store two units of momentum.)
+late right [ Crate1 Momentum1R | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1R ]
++ late right [ Crate Momentum1R | MetalCrate Momentum1R ] -> [ Crate | MetalCrate Momentum2R ]
++ late right [ MetalCrate Momentum2R | Crate no Momentum ] -> [ MetalCrate Momentum1R | Crate Momentum1R ]
++ late right [ MetalCrate Momentum2R | MetalCrate Momentum1R ] -> [ MetalCrate Momentum1R | MetalCrate Momentum2R ]
+late left [ Crate1 Momentum1L | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1L ]
++ late left [ Crate Momentum1L | MetalCrate Momentum1L ] -> [ Crate | MetalCrate Momentum2L ]
++ late left [ MetalCrate Momentum2L | Crate no Momentum ] -> [ MetalCrate Momentum1L | Crate Momentum1L ]
++ late left [ MetalCrate Momentum2L | MetalCrate Momentum1L ] -> [ MetalCrate Momentum1L | MetalCrate Momentum2L ]
+late up [ Crate1 Momentum1U | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1U ]
++ late up [ Crate Momentum1U | MetalCrate Momentum1U ] -> [ Crate | MetalCrate Momentum2U ]
++ late up [ MetalCrate Momentum2U | Crate no Momentum ] -> [ MetalCrate Momentum1U | Crate Momentum1U ]
++ late up [ MetalCrate Momentum2U | MetalCrate Momentum1U ] -> [ MetalCrate Momentum1U | MetalCrate Momentum2U ]
+late down [ Crate1 Momentum1D | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1D ]
++ late down [ Crate Momentum1D | MetalCrate Momentum1D ] -> [ Crate | MetalCrate Momentum2D ]
++ late down [ MetalCrate Momentum2D | Crate no Momentum ] -> [ MetalCrate Momentum1D | Crate Momentum1D ]
++ late down [ MetalCrate Momentum2D | MetalCrate Momentum1D ] -> [ MetalCrate Momentum1D | MetalCrate Momentum2D ]
 
-( Walls absorb momentum )
+( Walls absorb momentum. )
 late right [ MomentumR | Wall ] -> [ | Wall ]
 late left [ MomentumL | Wall ] -> [ | Wall ]
 late up [ MomentumU | Wall ] -> [ | Wall ]
 late down [ MomentumD | Wall ] -> [ | Wall ]
+
+( Metal crates require two units of momentum to keep move. )
+late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
 
 ( If any momentum is left, run another turn )
 late [ Momentum ] -> [ Momentum ] again
@@ -117,9 +156,9 @@ late [ Momentum ] -> [ Momentum ] again
 WINCONDITIONS
 ==============
 
-All Target on Crate   
+All Target on Crate
 
-=======     
+=======
 LEVELS
 =======
 
@@ -134,5 +173,5 @@ LEVELS
 ##########
 
 ########################
-#O.P..*...**...*...**..#
+#O.P..x*..x***.x...**..#
 ########################
