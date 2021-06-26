@@ -18,8 +18,16 @@ BROWN
 Player 
 Blue   
 
-Crate 
+WoodenCrate 
 Orange darkbrown
+11111
+10001
+10001
+10001
+11111
+
+MetalCrate
+Gray Darkgray
 11111
 10001
 10001
@@ -45,9 +53,13 @@ LEGEND
 . = Background
 # = Wall
 P = Player
-* = Crate
-@ = Crate and Target
+* = WoodenCrate
+x = MetalCrate
 O = Target
+
+Crate = WoodenCrate or MetalCrate
+Crate1 = Crate
+Crate2 = Crate
 
 Momentum = MomentumR or MomentumL or MomentumU or MomentumD
 
@@ -70,7 +82,7 @@ RULES
 
 ( Player can push one more crates )
 [ > Player | Crate ] -> [ > Player | > Crate ]
-[ > Crate | Crate ] -> [ > Crate | > Crate ]
+[ > Crate1 | Crate2 ] -> [ > Crate1 | > Crate2 ]
 
 ( Recover crate movement from existing momentum )
 [ Crate MomentumR ] -> [ right Crate MomentumR ]
@@ -87,10 +99,10 @@ RULES
 (############ late rules ############)
 
 ( Transfer momentum through stationary crates, a la Newton's Cradle )
-late right [ Crate MomentumR | Crate no Momentum ] -> [ Crate | Crate MomentumR ]
-late left [ Crate MomentumL | Crate no Momentum ] -> [ Crate | Crate MomentumL ]
-late up [ Crate MomentumU | Crate no Momentum ] -> [ Crate | Crate MomentumU ]
-late down [ Crate MomentumD | Crate no Momentum ] -> [ Crate | Crate MomentumD ]
+late right [ Crate1 MomentumR | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumR ]
+late left [ Crate1 MomentumL | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumL ]
+late up [ Crate1 MomentumU | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumU ]
+late down [ Crate1 MomentumD | Crate2 no Momentum ] -> [ Crate1 | Crate2 MomentumD ]
 
 ( Walls absorb momentum )
 late right [ MomentumR | Wall ] -> [ | Wall ]
@@ -98,6 +110,7 @@ late left [ MomentumL | Wall ] -> [ | Wall ]
 late up [ MomentumU | Wall ] -> [ | Wall ]
 late down [ MomentumD | Wall ] -> [ | Wall ]
 
+( If any momentum is left, run another turn )
 late [ Momentum ] -> [ Momentum ] again
 
 ==============
@@ -110,13 +123,15 @@ All Target on Crate
 LEVELS
 =======
 
-#########
-#.......#
-#.....@.#
-#.P.*.O.#
-#.......#
-#.......#
-#########
+##########
+#...##..##
+#.p...*.##
+#...##...#
+######.#.#
+#...##...#
+#.o.....##
+#...######
+##########
 
 ########################
 #O.P..*...**...*...**..#
