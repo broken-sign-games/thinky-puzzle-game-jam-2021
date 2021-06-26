@@ -2,6 +2,8 @@ title Conservation of Momentum
 author Menderbug
 homepage menderbug.itch.io
 
+verbose_logging
+
 ========
 OBJECTS
 ========
@@ -164,7 +166,7 @@ RULES
 (############ late rules ############)
 
 ( Transfer momentum through stationary crates, a la Newton's Cradle.
-  Metal crates can store two units of momentum.)
+  Metal crates can store two units of momentum. )  
 late right [ Crate1 Momentum1R | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1R ]
 + late right [ Crate Momentum1R | MetalCrate Momentum1R ] -> [ Crate | MetalCrate Momentum2R ]
 + late right [ MetalCrate Momentum2R | Crate no Momentum ] -> [ MetalCrate Momentum1R | Crate Momentum1R ]
@@ -188,7 +190,7 @@ late left [ MomentumL | Wall ] -> [ | Wall ]
 late up [ MomentumU | Wall ] -> [ | Wall ]
 late down [ MomentumD | Wall ] -> [ | Wall ]
 
-( Metal crates require two units of momentum to keep move. )
+( Metal crates require two units of momentum to keep moving. )
 late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
 
 ( Drop crates into pits. )
@@ -211,19 +213,38 @@ WINCONDITIONS
 
 All Target on Crate
 
+No Momentum
+
 =======
 LEVELS
 =======
 
-##########
-#...##..##
-#.p...*.##
-#...##...#
-######.#.#
-#...##...#
-#.o.....##
-#...######
-##########
+###########
+#...#######
+#.p.#######
+#...#######
+##.########
+##.####...#
+#.*..o..#.#
+#...#.....#
+###...#####
+###########
+
+###########
+###...oo..#
+###.*.....#
+#....*..#.#
+#..p......#
+##.....####
+##..#######
+###########
+
+###########
+#...*..o..#
+#.p.*.....#
+#...*.....#
+######...##
+###########
 
 ########################
 #O.P..x...x***.x._**...#
