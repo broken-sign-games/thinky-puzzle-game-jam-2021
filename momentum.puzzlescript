@@ -4,48 +4,268 @@ homepage menderbug.itch.io
 
 noaction
 
+run_rules_on_level_start
+
 ========
 OBJECTS
 ========
 
 Background
-GREEN
+#547e64 #92a984
+00000
+00000
+00100
+00000
+00000
 
 Target
-Purple
+#8ff8e2
+.000.
+0...0
+0.0.0
+0...0
+.000.
 
 Wall
-BROWN
+#3e3546
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+
+( RLUD indicate which sides border non-wall tiles )
+
+WallDecoR
+#3e3546 #625565 #7f708a #694f62
+00012
+00012
+00002
+00012
+00012
+.....
+.....
+
+WallDecoL
+#3e3546 #625565 #7f708a #694f62
+21000
+21000
+20000
+21000
+21000
+.....
+.....
+
+WallDecoU
+#3e3546 #625565 #7f708a #694f62
+22222
+11011
+00000
+00000
+00000
+.....
+.....
+
+WallDecoD
+#3e3546 #625565 #7f708a #694f62
+00000
+00000
+00000
+11011
+22222
+33333
+33333
+
+WallDecoRL
+#3e3546 #625565 #7f708a #694f62
+21012
+21012
+20002
+21012
+21012
+.....
+.....
+
+WallDecoUD
+#3e3546 #625565 #7f708a #694f62
+22222
+11011
+00000
+11011
+22222
+33333
+33333
+
+WallDecoRU
+#3e3546 #625565 #7f708a #694f62
+22222
+11012
+00002
+00012
+00012
+.....
+.....
+
+WallDecoRD
+#3e3546 #625565 #7f708a #694f62
+00012
+00012
+00002
+11012
+22222
+33333
+33333
+
+WallDecoLU
+#3e3546 #625565 #7f708a #694f62
+22222
+21011
+20000
+21000
+21000
+.....
+.....
+
+WallDecoLD
+#3e3546 #625565 #7f708a #694f62
+21000
+21000
+20000
+21011
+22222
+33333
+33333
+
+WallDecoRLU
+#3e3546 #625565 #7f708a #694f62
+22222
+21012
+20002
+21012
+21012
+.....
+.....
+
+WallDecoRLD
+#3e3546 #625565 #7f708a #694f62
+21012
+21012
+20002
+21012
+22222
+33333
+33333
+
+WallDecoUDR
+#3e3546 #625565 #7f708a #694f62
+22222
+11012
+00002
+11012
+22222
+33333
+33333
+
+WallDecoUDL
+#3e3546 #625565 #7f708a #694f62
+22222
+21011
+20000
+21011
+22222
+33333
+33333
+
+WallDecoRLUD
+#3e3546 #625565 #7f708a #694f62
+22222
+21012
+20002
+21012
+22222
+33333
+33333
+
+WallDecoCornerRU
+#3e3546 #625565 #7f708a #694f62
+...12
+...11
+.....
+.....
+.....
+.....
+.....
+
+WallDecoCornerRD
+#3e3546 #625565 #7f708a #694f62
+.....
+.....
+.....
+...11
+...12
+.....
+.....
+
+WallDecoCornerLU
+#3e3546 #625565 #7f708a #694f62
+21...
+11...
+.....
+.....
+.....
+.....
+.....
+
+WallDecoCornerLD
+#3e3546 #625565 #7f708a #694f62
+.....
+.....
+.....
+11...
+21...
+.....
+.....
 
 Player
-Blue
+#2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
+.333.
+34433
+36563
+35553
+.021.
+.001.
 
 Pit
-Black
+#1a1518
+
+PitDeco
+#2e222f #3e3546
+11111
+00000
+.....
+.....
+.....
 
 WoodenCrate
-Orange darkbrown
-11111
-10001
-10001
-10001
-11111
+#6e2727 #7a3045 #9e4539 #cd683d
+.222.
+23220
+22210
+21100
+.000.
+.....
 
 FallingWoodenCrate1
-Orange darkbrown
-.....
-.111.
-.101.
-.111.
-.....
+#6e2727 #7a3045 #9e4539 #cd683d
+..2..
+.210.
+..0..
 
 FallingWoodenCrate2
-Orange darkbrown
-.....
-.....
+#6e2727 #7a3045 #9e4539 #cd683d
 ..1..
-.....
-.....
 
 MetalCrate
 Gray Darkgray
@@ -96,6 +316,21 @@ transparent
 Momentum2D
 transparent
 
+_WallEndsR
+pink
+
+_WallEndsL
+pink
+
+_WallEndsU
+pink
+
+_WallEndsD
+pink
+
+_Temp
+pink
+
 =======
 LEGEND
 =======
@@ -124,6 +359,10 @@ MomentumU = Momentum1U or Momentum2U
 MomentumD = Momentum1D or Momentum2D
 Momentum = Momentum1 or Momentum2
 
+WallEnds = _WallEndsR or _WallEndsL or _WallEndsU or _WallEndsD
+WallDeco = WallDecoR or WallDecoL or WallDecoU or WallDecoD or WallDecoRL or WallDecoUD or WallDecoRU or WallDecoRD or WallDecoLU or WallDecoLD or WallDecoRLU or WallDecoRLD or WallDecoUDR or WallDecoUDL or WallDecoRLUD
+WallDecoCorner = WallDecoCornerRU or WallDecoCornerRD or WallDecoCornerLU or WallDecoCornerLD
+
 =======
 SOUNDS
 =======
@@ -134,14 +373,64 @@ COLLISIONLAYERS
 
 Background
 Pit
+PitDeco
 FallingCrate
 Target
 Player, Wall, Crate
+WallDeco
+WallDecoCornerRU
+WallDecoCornerRD
+WallDecoCornerLU
+WallDecoCornerLD
 Momentum
+_WallEndsR
+_WallEndsL
+_WallEndsU
+_WallEndsD
+_Temp
 
 ======
 RULES
 ======
+
+( Visuals )
+up [ Pit no PitDeco | no Pit ] -> [ Pit PitDeco | ]
+right [ Wall no WallDecoR | no Wall ] -> [ Wall _WallEndsR | ]
+left [ Wall no WallDecoR | no Wall ] -> [ Wall _WallEndsL | ]
+up [ Wall no WallDecoR | no Wall ] -> [ Wall _WallEndsU | ]
+down [ Wall no WallDecoR | no Wall ] -> [ Wall _WallEndsD | ]
+
+right [ Wall no _WallEndsU | _WallEndsU ] -> [ Wall _Temp | _WallEndsU ]
+up [ _Temp | _WallEndsR ] -> [ _Temp WallDecoCornerRU | _WallEndsR ]
+[ _Temp ] -> [ ]
+right [ Wall no _WallEndsD | _WallEndsD ] -> [ Wall _Temp | _WallEndsD ]
+down [ _Temp | _WallEndsR ] -> [ _Temp WallDecoCornerRD | _WallEndsR ]
+[ _Temp ] -> [ ]
+left [ Wall no _WallEndsU | _WallEndsU ] -> [ Wall _Temp | _WallEndsU ]
+up [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLU | _WallEndsL ]
+[ _Temp ] -> [ ]
+left [ Wall no _WallEndsD | _WallEndsD ] -> [ Wall _Temp | _WallEndsD ]
+down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
+[ _Temp ] -> [ ]
+
+
+
+[ _WallEndsR _WallEndsL _WallEndsU _WallEndsD ] -> [ WallDecoRLUD ]
+[ _WallEndsR _WallEndsL _WallEndsU ] -> [ WallDecoRLU ]
+[ _WallEndsR _WallEndsL _WallEndsD ] -> [ WallDecoRLD ]
+[ _WallEndsR _WallEndsU _WallEndsD ] -> [ WallDecoUDR ]
+[ _WallEndsL _WallEndsU _WallEndsD ] -> [ WallDecoUDL ]
+[ _WallEndsR _WallEndsL ] -> [ WallDecoRL ]
+[ _WallEndsU _WallEndsD ] -> [ WallDecoUD ]
+[ _WallEndsR _WallEndsU ] -> [ WallDecoRU ]
+[ _WallEndsR _WallEndsD ] -> [ WallDecoRD ]
+[ _WallEndsL _WallEndsU ] -> [ WallDecoLU ]
+[ _WallEndsL _WallEndsD ] -> [ WallDecoLD ]
+[ _WallEndsR ] -> [ WallDecoR ]
+[ _WallEndsL ] -> [ WallDecoL ]
+[ _WallEndsU ] -> [ WallDecoU ]
+[ _WallEndsD ] -> [ WallDecoD ]
+
 
 ( Player can push one more crates. )
 [ > Player | Crate ] -> [ > Player | > Crate ]
