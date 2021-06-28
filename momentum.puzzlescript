@@ -230,6 +230,54 @@ WallDecoCornerLD
 .....
 .....
 
+Sand
+#fbff86 #d5e04b
+00000
+00000
+00100
+00000
+00000
+
+SandDecoR
+#fbff86 #d5e04b
+.....
+.....
+....0
+....0
+.....
+
+SandDecoL
+#fbff86 #d5e04b
+.....
+0....
+0....
+.....
+.....
+
+SandDecoU
+#fbff86 #d5e04b
+..00.
+.....
+.....
+.....
+.....
+
+SandDecoD
+#fbff86 #d5e04b
+.....
+.....
+.....
+.....
+.00..
+
+SandDecoBall
+#fbff86 #d5e04b
+.....
+.....
+.....
+..11.
+.....
+
 Player
 #2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
 .333.
@@ -372,6 +420,7 @@ LEGEND
 =======
 
 . = Background
+~ = Sand
 _ = Pit
 # = Wall
 P = Player
@@ -425,12 +474,18 @@ COLLISIONLAYERS
 ================
 
 Background
+Sand
+SandDecoR
+SandDecoL
+SandDecoU
+SandDecoD
 Pit
 PitDeco
 FallingBall
 FallingPlayer
 Target
 Player, Wall, Ball
+SandDecoBall
 WallDeco
 WallDecoCornerRU
 WallDecoCornerRD
@@ -483,6 +538,11 @@ down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 [ _WallEndsU ] -> [ WallDecoU ]
 [ _WallEndsD ] -> [ WallDecoD ]
 
+right [ no Sand no SandDecoR no Wall no Pit | Sand ] -> [ SandDecoR | Sand ]
+left [ no Sand no SandDecoL no Wall no Pit | Sand ] -> [ SandDecoL | Sand ]
+up [ no Sand no SandDecoU no Wall no Pit | Sand ] -> [ SandDecoU | Sand ]
+down [ no Sand no SandDecoD no Wall no Pit | Sand ] -> [ SandDecoD | Sand ]
+
 
 ( Player can't walk over pits )
 ([ > Player | Pit ] -> [ Player | Pit ])
@@ -524,7 +584,14 @@ late up [ Ball MomentumU | Wall ] -> [ Ball MomentumU | Wall ] sfx2
 late down [ Ball MomentumD | Wall ] -> [ Ball MomentumD | Wall ] sfx2
 late [ Ball Pit no FallingBall ] -> [ Ball Pit ] sfx9
 late [ Player Pit ] -> [ Player Pit ] sfx10
+late [ Ball Momentum Sand ] -> [ Ball Momentum Sand ] sfx8
 
+( Dynamic visuals )
+late [ SandDecoBall ] -> [ ]
+late [ Ball Sand ] -> [ Ball Sand SandDecoBall ]
+
+( Sand absorbs momentum of entering balls. )
+late [ Ball Momentum Sand ] -> [ Ball Sand ]
 
 ( Transfer momentum through stationary balls, a la Newton's Cradle.
   Metal balls can store two units of momentum.
@@ -748,6 +815,29 @@ LEVELS
 ####.......####
 ###############
 ###############
+
+( Introduces sand )
+
+###########
+#..#.o...##
+#......p.##
+##........#
+#...~.....#
+#...~~..#.#
+###...*...#
+###.....###
+###########
+
+############
+#...##.....#
+#.*......~.#
+#.....#..~.#
+#.##.__.*..#
+#...._~...o#
+#....__~.p.#
+##.~~......#
+##....######
+############
 
 message Thank you for playing! :)
 
