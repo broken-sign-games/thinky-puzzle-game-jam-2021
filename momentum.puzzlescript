@@ -271,7 +271,7 @@ PitDeco
 .....
 .....
 
-WoodenCrate
+WoodenBall
 #6e2727 #7a3045 #9e4539 #cd683d
 .222.
 23221
@@ -280,7 +280,7 @@ WoodenCrate
 .000.
 .....
 
-FallingWoodenCrate1
+FallingWoodenBall1
 #6e2727 #7a3045 #9e4539 #cd683d
 .222.
 23221
@@ -289,17 +289,17 @@ FallingWoodenCrate1
 .000.
 .....
 
-FallingWoodenCrate2
+FallingWoodenBall2
 #6e2727 #7a3045 #9e4539 #cd683d
 .222.
 .210.
 .000.
 
-FallingWoodenCrate3
+FallingWoodenBall3
 #6e2727 #7a3045 #9e4539 #cd683d
 ..0..
 
-MetalCrate
+MetalBall
 #625565 #9babb2 #c7dcd0 #ffffff
 .222.
 23221
@@ -308,7 +308,7 @@ MetalCrate
 .000.
 .....
 
-FallingMetalCrate1
+FallingMetalBall1
 #625565 #9babb2 #c7dcd0 #ffffff
 .222.
 23221
@@ -317,13 +317,13 @@ FallingMetalCrate1
 .000.
 .....
 
-FallingMetalCrate2
+FallingMetalBall2
 #625565 #9babb2 #c7dcd0 #ffffff
 .222.
 .210.
 .000.
 
-FallingMetalCrate3
+FallingMetalBall3
 #625565 #9babb2 #c7dcd0 #ffffff
 ..0..
 
@@ -375,17 +375,17 @@ LEGEND
 _ = Pit
 # = Wall
 P = Player
-* = WoodenCrate
-x = MetalCrate
+* = WoodenBall
+x = MetalBall
 O = Target
 
-Crate = WoodenCrate or MetalCrate
-Crate1 = Crate
-Crate2 = Crate
+Ball = WoodenBall or MetalBall
+Ball1 = Ball
+Ball2 = Ball
 
-FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2 or FallingWoodenCrate3
-FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2 or FallingMetalCrate3
-FallingCrate = FallingWoodenCrate or FallingMetalCrate
+FallingWoodenBall = FallingWoodenBall1 or FallingWoodenBall2 or FallingWoodenBall3
+FallingMetalBall = FallingMetalBall1 or FallingMetalBall2 or FallingMetalBall3
+FallingBall = FallingWoodenBall or FallingMetalBall
 FallingPlayer = FallingPlayer1 or FallingPlayer2 or FallingPlayer3
 
 Momentum1 = Momentum1R or Momentum1L or Momentum1U or Momentum1D
@@ -427,10 +427,10 @@ COLLISIONLAYERS
 Background
 Pit
 PitDeco
-FallingCrate
+FallingBall
 FallingPlayer
 Target
-Player, Wall, Crate
+Player, Wall, Ball
 WallDeco
 WallDecoCornerRU
 WallDecoCornerRD
@@ -487,81 +487,81 @@ down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 ( Player can't walk over pits )
 ([ > Player | Pit ] -> [ Player | Pit ])
 
-( Player can push one more crates. )
-[ > Player | Crate ] -> [ > Player | > Crate ]
-[ > Crate1 | Crate2 ] -> [ > Crate1 | > Crate2 ]
+( Player can push one more balls. )
+[ > Player | Ball ] -> [ > Player | > Ball ]
+[ > Ball1 | Ball2 ] -> [ > Ball1 | > Ball2 ]
 
-( Recover crate movement from existing momentum. )
-[ Crate MomentumR ] -> [ right Crate MomentumR ]
-[ Crate MomentumL ] -> [ left Crate MomentumL ]
-[ Crate MomentumU ] -> [ up Crate MomentumU ]
-[ Crate MomentumD ] -> [ down Crate MomentumD ]
+( Recover ball movement from existing momentum. )
+[ Ball MomentumR ] -> [ right Ball MomentumR ]
+[ Ball MomentumL ] -> [ left Ball MomentumL ]
+[ Ball MomentumU ] -> [ up Ball MomentumU ]
+[ Ball MomentumD ] -> [ down Ball MomentumD ]
 
-( Add momentum to moving crates. )
-[ right WoodenCrate ] -> [ right WoodenCrate right Momentum1R ]
-[ left WoodenCrate ] -> [ left WoodenCrate left Momentum1L ]
-[ up WoodenCrate ] -> [ up WoodenCrate up Momentum1U ]
-[ down WoodenCrate ] -> [ down WoodenCrate down Momentum1D ]
-[ right MetalCrate ] -> [ right MetalCrate right Momentum2R ]
-[ left MetalCrate ] -> [ left MetalCrate left Momentum2L ]
-[ up MetalCrate ] -> [ up MetalCrate up Momentum2U ]
-[ down MetalCrate ] -> [ down MetalCrate down Momentum2D ]
+( Add momentum to moving balls. )
+[ right WoodenBall ] -> [ right WoodenBall right Momentum1R ]
+[ left WoodenBall ] -> [ left WoodenBall left Momentum1L ]
+[ up WoodenBall ] -> [ up WoodenBall up Momentum1U ]
+[ down WoodenBall ] -> [ down WoodenBall down Momentum1D ]
+[ right MetalBall ] -> [ right MetalBall right Momentum2R ]
+[ left MetalBall ] -> [ left MetalBall left Momentum2L ]
+[ up MetalBall ] -> [ up MetalBall up Momentum2U ]
+[ down MetalBall ] -> [ down MetalBall down Momentum2D ]
 
 (############ late rules ############)
 
 ( Sound effects )
-late right [ Crate MomentumR | WoodenCrate no Momentum ] -> [ Crate MomentumR | WoodenCrate ] sfx0
-late left [ Crate MomentumL | WoodenCrate no Momentum ] -> [ Crate MomentumL | WoodenCrate ] sfx0
-late up [ Crate MomentumU | WoodenCrate no Momentum ] -> [ Crate MomentumU | WoodenCrate ] sfx0
-late down [ Crate MomentumD | WoodenCrate no Momentum ] -> [ Crate MomentumD | WoodenCrate ] sfx0
-late right [ Crate MomentumR | MetalCrate no Momentum ] -> [ Crate MomentumR | MetalCrate ] sfx1
-late left [ Crate MomentumL | MetalCrate no Momentum ] -> [ Crate MomentumL | MetalCrate ] sfx1
-late up [ Crate MomentumU | MetalCrate no Momentum ] -> [ Crate MomentumU | MetalCrate ] sfx1
-late down [ Crate MomentumD | MetalCrate no Momentum ] -> [ Crate MomentumD | MetalCrate ] sfx1
-late right [ Crate MomentumR | Wall ] -> [ Crate MomentumR | Wall ] sfx2
-late left [ Crate MomentumL | Wall ] -> [ Crate MomentumL | Wall ] sfx2
-late up [ Crate MomentumU | Wall ] -> [ Crate MomentumU | Wall ] sfx2
-late down [ Crate MomentumD | Wall ] -> [ Crate MomentumD | Wall ] sfx2
-late [ Crate Pit no FallingCrate ] -> [ Crate Pit ] sfx9
+late right [ Ball MomentumR | WoodenBall no Momentum ] -> [ Ball MomentumR | WoodenBall ] sfx0
+late left [ Ball MomentumL | WoodenBall no Momentum ] -> [ Ball MomentumL | WoodenBall ] sfx0
+late up [ Ball MomentumU | WoodenBall no Momentum ] -> [ Ball MomentumU | WoodenBall ] sfx0
+late down [ Ball MomentumD | WoodenBall no Momentum ] -> [ Ball MomentumD | WoodenBall ] sfx0
+late right [ Ball MomentumR | MetalBall no Momentum ] -> [ Ball MomentumR | MetalBall ] sfx1
+late left [ Ball MomentumL | MetalBall no Momentum ] -> [ Ball MomentumL | MetalBall ] sfx1
+late up [ Ball MomentumU | MetalBall no Momentum ] -> [ Ball MomentumU | MetalBall ] sfx1
+late down [ Ball MomentumD | MetalBall no Momentum ] -> [ Ball MomentumD | MetalBall ] sfx1
+late right [ Ball MomentumR | Wall ] -> [ Ball MomentumR | Wall ] sfx2
+late left [ Ball MomentumL | Wall ] -> [ Ball MomentumL | Wall ] sfx2
+late up [ Ball MomentumU | Wall ] -> [ Ball MomentumU | Wall ] sfx2
+late down [ Ball MomentumD | Wall ] -> [ Ball MomentumD | Wall ] sfx2
+late [ Ball Pit no FallingBall ] -> [ Ball Pit ] sfx9
 late [ Player Pit ] -> [ Player Pit ] sfx10
 
 
-( Transfer momentum through stationary crates, a la Newton's Cradle.
-  Metal crates can store two units of momentum.
+( Transfer momentum through stationary balls, a la Newton's Cradle.
+  Metal balls can store two units of momentum.
   Walls absorb momentum. )  
-late right [ Crate1 Momentum1R | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1R ]
-+ late right [ Crate Momentum1R | MetalCrate Momentum1R ] -> [ Crate | MetalCrate Momentum2R ]
-+ late right [ MetalCrate Momentum2R | Crate no Momentum ] -> [ MetalCrate Momentum1R | Crate Momentum1R ]
-+ late right [ MetalCrate Momentum2R | MetalCrate Momentum1R ] -> [ MetalCrate Momentum1R | MetalCrate Momentum2R ]
-+ late right [ Crate MomentumR | Wall ] -> [ Crate | Wall ]
-late left [ Crate1 Momentum1L | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1L ]
-+ late left [ Crate Momentum1L | MetalCrate Momentum1L ] -> [ Crate | MetalCrate Momentum2L ]
-+ late left [ MetalCrate Momentum2L | Crate no Momentum ] -> [ MetalCrate Momentum1L | Crate Momentum1L ]
-+ late left [ MetalCrate Momentum2L | MetalCrate Momentum1L ] -> [ MetalCrate Momentum1L | MetalCrate Momentum2L ]
-+ late left [ Crate MomentumL | Wall ] -> [ Crate | Wall ]
-late up [ Crate1 Momentum1U | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1U ]
-+ late up [ Crate Momentum1U | MetalCrate Momentum1U ] -> [ Crate | MetalCrate Momentum2U ]
-+ late up [ MetalCrate Momentum2U | Crate no Momentum ] -> [ MetalCrate Momentum1U | Crate Momentum1U ]
-+ late up [ MetalCrate Momentum2U | MetalCrate Momentum1U ] -> [ MetalCrate Momentum1U | MetalCrate Momentum2U ]
-+ late up [ Crate MomentumU | Wall ] -> [ Crate | Wall ]
-late down [ Crate1 Momentum1D | Crate2 no Momentum ] -> [ Crate1 | Crate2 Momentum1D ]
-+ late down [ Crate Momentum1D | MetalCrate Momentum1D ] -> [ Crate | MetalCrate Momentum2D ]
-+ late down [ MetalCrate Momentum2D | Crate no Momentum ] -> [ MetalCrate Momentum1D | Crate Momentum1D ]
-+ late down [ MetalCrate Momentum2D | MetalCrate Momentum1D ] -> [ MetalCrate Momentum1D | MetalCrate Momentum2D ]
-+ late down [ Crate MomentumD | Wall ] -> [ Crate | Wall ]
+late right [ Ball1 Momentum1R | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1R ]
++ late right [ Ball Momentum1R | MetalBall Momentum1R ] -> [ Ball | MetalBall Momentum2R ]
++ late right [ MetalBall Momentum2R | Ball no Momentum ] -> [ MetalBall Momentum1R | Ball Momentum1R ]
++ late right [ MetalBall Momentum2R | MetalBall Momentum1R ] -> [ MetalBall Momentum1R | MetalBall Momentum2R ]
++ late right [ Ball MomentumR | Wall ] -> [ Ball | Wall ]
+late left [ Ball1 Momentum1L | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1L ]
++ late left [ Ball Momentum1L | MetalBall Momentum1L ] -> [ Ball | MetalBall Momentum2L ]
++ late left [ MetalBall Momentum2L | Ball no Momentum ] -> [ MetalBall Momentum1L | Ball Momentum1L ]
++ late left [ MetalBall Momentum2L | MetalBall Momentum1L ] -> [ MetalBall Momentum1L | MetalBall Momentum2L ]
++ late left [ Ball MomentumL | Wall ] -> [ Ball | Wall ]
+late up [ Ball1 Momentum1U | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1U ]
++ late up [ Ball Momentum1U | MetalBall Momentum1U ] -> [ Ball | MetalBall Momentum2U ]
++ late up [ MetalBall Momentum2U | Ball no Momentum ] -> [ MetalBall Momentum1U | Ball Momentum1U ]
++ late up [ MetalBall Momentum2U | MetalBall Momentum1U ] -> [ MetalBall Momentum1U | MetalBall Momentum2U ]
++ late up [ Ball MomentumU | Wall ] -> [ Ball | Wall ]
+late down [ Ball1 Momentum1D | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1D ]
++ late down [ Ball Momentum1D | MetalBall Momentum1D ] -> [ Ball | MetalBall Momentum2D ]
++ late down [ MetalBall Momentum2D | Ball no Momentum ] -> [ MetalBall Momentum1D | Ball Momentum1D ]
++ late down [ MetalBall Momentum2D | MetalBall Momentum1D ] -> [ MetalBall Momentum1D | MetalBall Momentum2D ]
++ late down [ Ball MomentumD | Wall ] -> [ Ball | Wall ]
 
-( Metal crates require two units of momentum to keep moving. )
-late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
+( Metal balls require two units of momentum to keep moving. )
+late [ MetalBall Momentum1 ] -> [ MetalBall ]
 
-( Drop crates into pits. )
-late [ FallingWoodenCrate3 ] -> [ ]
-late [ FallingWoodenCrate2 Pit ] -> [ FallingWoodenCrate3 Pit ] again
-late [ FallingWoodenCrate1 Pit ] -> [ FallingWoodenCrate2 Pit ] again
-late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
-late [ FallingMetalCrate3 ] -> [ ]
-late [ FallingMetalCrate2 Pit ] -> [ FallingMetalCrate3 Pit ] again
-late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
-late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
+( Drop balls into pits. )
+late [ FallingWoodenBall3 ] -> [ ]
+late [ FallingWoodenBall2 Pit ] -> [ FallingWoodenBall3 Pit ] again
+late [ FallingWoodenBall1 Pit ] -> [ FallingWoodenBall2 Pit ] again
+late [ WoodenBall Pit ] -> [ FallingWoodenBall1 Pit ] again
+late [ FallingMetalBall3 ] -> [ ]
+late [ FallingMetalBall2 Pit ] -> [ FallingMetalBall3 Pit ] again
+late [ FallingMetalBall1 Pit ] -> [ FallingMetalBall2 Pit ] again
+late [ MetalBall Pit ] -> [ FallingMetalBall1 Pit ] again
 
 ( Drop player into pits. )
 late [ FallingPlayer3 ] -> [ ]
@@ -570,7 +570,7 @@ late [ FallingPlayer1 Pit ] -> [ FallingPlayer2 Pit ] again
 late [ Player Pit ] -> [ FallingPlayer1 Pit ] again
 
 ( Remove stray momentum. )
-late [ Momentum no Crate ] -> [ ]
+late [ Momentum no Ball ] -> [ ]
 
 ( If any momentum is left, run another turn. )
 late [ Momentum ] -> [ Momentum ] again
@@ -579,11 +579,11 @@ late [ Momentum ] -> [ Momentum ] again
 WINCONDITIONS
 ==============
 
-All Target on Crate
+All Target on Ball
 
 No Momentum
 
-No FallingCrate
+No FallingBall
 
 =======
 LEVELS
@@ -628,7 +628,7 @@ LEVELS
 ##......###
 ###########
 
-( Introduces pushing multiple crates at once )
+( Introduces pushing multiple balls at once )
 
 #########
 #....o..#
@@ -681,7 +681,7 @@ LEVELS
 ##......##
 ##########
 
-( Introduces dropping several crates into a pit at once )
+( Introduces dropping several balls into a pit at once )
 
 ###############
 ###......######
@@ -709,7 +709,7 @@ LEVELS
 ####.....###
 ############
 
-( Introduces momentum transfer of multiple crates )
+( Introduces momentum transfer of multiple balls )
 
 ###############
 #.....o......##
