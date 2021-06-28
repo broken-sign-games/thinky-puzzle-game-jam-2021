@@ -1,4 +1,4 @@
-title Conservation of Momentum
+title Isaac and the Conservation of Momentum
 author Menderbug
 homepage menderbug.itch.io
 background_color #3e3546
@@ -261,11 +261,20 @@ WoodenCrate
 
 FallingWoodenCrate1
 #6e2727 #7a3045 #9e4539 #cd683d
+.222.
+23220
+22210
+21100
+.000.
+.....
+
+FallingWoodenCrate2
+#6e2727 #7a3045 #9e4539 #cd683d
 ..2..
 .210.
 ..0..
 
-FallingWoodenCrate2
+FallingWoodenCrate3
 #6e2727 #7a3045 #9e4539 #cd683d
 ..1..
 
@@ -349,7 +358,7 @@ Crate = WoodenCrate or MetalCrate
 Crate1 = Crate
 Crate2 = Crate
 
-FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2
+FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2 or FallingWoodenCrate3
 FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2
 FallingCrate = FallingWoodenCrate or FallingMetalCrate
 
@@ -368,6 +377,18 @@ WallDecoCorner = WallDecoCornerRU or WallDecoCornerRD or WallDecoCornerLU or Wal
 =======
 SOUNDS
 =======
+
+sfx0 61949504 ( wooden ball )
+
+sfx1 71577900 ( metal ball )
+
+sfx2 48227904 ( ball hits wall )
+
+sfx9 64621908 ( object falling into pit )
+
+sfx10 19886102 ( player death? )
+
+endlevel 27401703
 
 ================
 COLLISIONLAYERS
@@ -457,6 +478,21 @@ down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 
 (############ late rules ############)
 
+( Sound effects )
+late right [ Crate MomentumR | WoodenCrate no Momentum ] -> [ Crate MomentumR | WoodenCrate ] sfx0
+late left [ Crate MomentumL | WoodenCrate no Momentum ] -> [ Crate MomentumL | WoodenCrate ] sfx0
+late up [ Crate MomentumU | WoodenCrate no Momentum ] -> [ Crate MomentumU | WoodenCrate ] sfx0
+late down [ Crate MomentumD | WoodenCrate no Momentum ] -> [ Crate MomentumD | WoodenCrate ] sfx0
+late right [ Crate MomentumR | MetalCrate no Momentum ] -> [ Crate MomentumR | MetalCrate ] sfx1
+late left [ Crate MomentumL | MetalCrate no Momentum ] -> [ Crate MomentumL | MetalCrate ] sfx1
+late up [ Crate MomentumU | MetalCrate no Momentum ] -> [ Crate MomentumU | MetalCrate ] sfx1
+late down [ Crate MomentumD | MetalCrate no Momentum ] -> [ Crate MomentumD | MetalCrate ] sfx1
+late right [ Crate MomentumR | Wall ] -> [ Crate MomentumR | Wall ] sfx2
+late left [ Crate MomentumL | Wall ] -> [ Crate MomentumL | Wall ] sfx2
+late up [ Crate MomentumU | Wall ] -> [ Crate MomentumU | Wall ] sfx2
+late down [ Crate MomentumD | Wall ] -> [ Crate MomentumD | Wall ] sfx2
+
+
 ( Transfer momentum through stationary crates, a la Newton's Cradle.
   Metal crates can store two units of momentum.
   Walls absorb momentum. )  
@@ -485,12 +521,13 @@ late down [ Crate1 Momentum1D | Crate2 no Momentum ] -> [ Crate1 | Crate2 Moment
 late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
 
 ( Drop crates into pits. )
-late [ FallingWoodenCrate2 ] -> [ ]
+late [ FallingWoodenCrate3 ] -> [ ]
+late [ FallingWoodenCrate2 Pit ] -> [ FallingWoodenCrate3 Pit ] again
 late [ FallingWoodenCrate1 Pit ] -> [ FallingWoodenCrate2 Pit ] again
-late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
+late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] sfx9 again
 late [ FallingMetalCrate2 ] -> [ ]
 late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
-late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
+late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] sfx9 again
 
 ( Remove stray momentum. )
 late [ Momentum no Crate ] -> [ ]
@@ -618,7 +655,7 @@ LEVELS
 #######...#####
 ###############
 
-( Introduces momentum transfer + stopping over a pit )
+( Introduces momentum transfer to stop over a pit )
 
 ############
 #####..#####
