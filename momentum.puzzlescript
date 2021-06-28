@@ -239,6 +239,27 @@ Player
 .021.
 .001.
 
+FallingPlayer1
+#2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
+.333.
+34433
+36563
+35553
+.021.
+.001.
+
+FallingPlayer2
+#2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
+.433.
+.353.
+.555.
+.021.
+
+FallingPlayer3
+#2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
+..3..
+..1..
+
 Pit
 #1a1518
 
@@ -361,6 +382,7 @@ Crate2 = Crate
 FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2 or FallingWoodenCrate3
 FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2
 FallingCrate = FallingWoodenCrate or FallingMetalCrate
+FallingPlayer = FallingPlayer1 or FallingPlayer2 or FallingPlayer3
 
 Momentum1 = Momentum1R or Momentum1L or Momentum1U or Momentum1D
 Momentum2 = Momentum2R or Momentum2L or Momentum2U or Momentum2D
@@ -388,7 +410,7 @@ sfx2 48227904 ( ball hits wall )
 
 sfx8 59530308 ( ball hits sand? )
 
-sfx9 89526908 ( object falling into pit ) ( 64621908 )
+sfx9 64621908 ( object falling into pit ) ( 89526908 )
 
 sfx10 19886102 ( player death? )
 
@@ -402,6 +424,7 @@ Background
 Pit
 PitDeco
 FallingCrate
+FallingPlayer
 Target
 Player, Wall, Crate
 WallDeco
@@ -458,7 +481,7 @@ down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 
 
 ( Player can't walk over pits )
-[ > Player | Pit ] -> [ Player | Pit ]
+([ > Player | Pit ] -> [ Player | Pit ])
 
 ( Player can push one more crates. )
 [ > Player | Crate ] -> [ > Player | > Crate ]
@@ -495,7 +518,8 @@ late right [ Crate MomentumR | Wall ] -> [ Crate MomentumR | Wall ] sfx2
 late left [ Crate MomentumL | Wall ] -> [ Crate MomentumL | Wall ] sfx2
 late up [ Crate MomentumU | Wall ] -> [ Crate MomentumU | Wall ] sfx2
 late down [ Crate MomentumD | Wall ] -> [ Crate MomentumD | Wall ] sfx2
-late [ Crate Pit  ] -> [ Crate Pit ] sfx9
+late [ Crate Pit no FallingCrate ] -> [ Crate Pit ] sfx9
+late [ Player Pit ] -> [ Player Pit ] sfx10
 
 
 ( Transfer momentum through stationary crates, a la Newton's Cradle.
@@ -533,6 +557,12 @@ late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
 late [ FallingMetalCrate2 ] -> [ ]
 late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
 late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
+
+( Drop player into pits. )
+late [ FallingPlayer3 ] -> [ ]
+late [ FallingPlayer2 Pit ] -> [ FallingPlayer3 Pit ] again
+late [ FallingPlayer1 Pit ] -> [ FallingPlayer2 Pit ] again
+late [ Player Pit ] -> [ FallingPlayer1 Pit ] again
 
 ( Remove stray momentum. )
 late [ Momentum no Crate ] -> [ ]
