@@ -461,11 +461,13 @@ sfx1 71577900 ( ball hits metal ball )
 
 sfx2 48227904 ( ball hits wall )
 
-sfx8 59530308 ( ball hits sand? )
+sfx7 36743507 ( player steps onto sand )
 
-sfx9 64621908 ( object falling into pit ) ( 89526908 )
+sfx8 59530308 ( ball hits sand )
 
-sfx10 19886102 ( player death? )
+sfx9 64621908 ( object falls into pit ) ( 89526908 )
+
+sfx10 19886102 ( player falls  )
 
 endlevel 27401703
 
@@ -543,9 +545,8 @@ left [ no Sand no SandDecoL no Wall no Pit | Sand ] -> [ SandDecoL | Sand ]
 up [ no Sand no SandDecoU no Wall no Pit | Sand ] -> [ SandDecoU | Sand ]
 down [ no Sand no SandDecoD no Wall no Pit | Sand ] -> [ SandDecoD | Sand ]
 
-
-( Player can't walk over pits )
-([ > Player | Pit ] -> [ Player | Pit ])
+( Movement-based sound effects )
+[ > Player | Sand ] -> [ > Player | Sand ] sfx7
 
 ( Player can push one more balls. )
 [ > Player | Ball ] -> [ > Player | > Ball ]
