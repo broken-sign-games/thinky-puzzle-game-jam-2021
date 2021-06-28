@@ -378,13 +378,17 @@ WallDecoCorner = WallDecoCornerRU or WallDecoCornerRD or WallDecoCornerLU or Wal
 SOUNDS
 =======
 
-sfx0 61949504 ( wooden ball )
+Player move 39983908
 
-sfx1 71577900 ( metal ball )
+sfx0 61949504 ( ball hits wooden ball )
+
+sfx1 71577900 ( ball hits metal ball )
 
 sfx2 48227904 ( ball hits wall )
 
-sfx9 64621908 ( object falling into pit )
+sfx8 59530308 ( ball hits sand? )
+
+sfx9 89526908 ( object falling into pit ) ( 64621908 )
 
 sfx10 19886102 ( player death? )
 
@@ -491,6 +495,7 @@ late right [ Crate MomentumR | Wall ] -> [ Crate MomentumR | Wall ] sfx2
 late left [ Crate MomentumL | Wall ] -> [ Crate MomentumL | Wall ] sfx2
 late up [ Crate MomentumU | Wall ] -> [ Crate MomentumU | Wall ] sfx2
 late down [ Crate MomentumD | Wall ] -> [ Crate MomentumD | Wall ] sfx2
+late [ Crate Pit  ] -> [ Crate Pit ] sfx9
 
 
 ( Transfer momentum through stationary crates, a la Newton's Cradle.
@@ -524,10 +529,10 @@ late [ MetalCrate Momentum1 ] -> [ MetalCrate ]
 late [ FallingWoodenCrate3 ] -> [ ]
 late [ FallingWoodenCrate2 Pit ] -> [ FallingWoodenCrate3 Pit ] again
 late [ FallingWoodenCrate1 Pit ] -> [ FallingWoodenCrate2 Pit ] again
-late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] sfx9 again
+late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
 late [ FallingMetalCrate2 ] -> [ ]
 late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
-late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] sfx9 again
+late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
 
 ( Remove stray momentum. )
 late [ Momentum no Crate ] -> [ ]
