@@ -274,7 +274,7 @@ PitDeco
 WoodenCrate
 #6e2727 #7a3045 #9e4539 #cd683d
 .222.
-23220
+23221
 22210
 21100
 .000.
@@ -283,7 +283,7 @@ WoodenCrate
 FallingWoodenCrate1
 #6e2727 #7a3045 #9e4539 #cd683d
 .222.
-23220
+23221
 22210
 21100
 .000.
@@ -291,37 +291,41 @@ FallingWoodenCrate1
 
 FallingWoodenCrate2
 #6e2727 #7a3045 #9e4539 #cd683d
-..2..
+.222.
 .210.
-..0..
+.000.
 
 FallingWoodenCrate3
 #6e2727 #7a3045 #9e4539 #cd683d
-..1..
+..0..
 
 MetalCrate
-Gray Darkgray
-11111
-10001
-10001
-10001
-11111
+#625565 #9babb2 #c7dcd0 #ffffff
+.222.
+23221
+22210
+21100
+.000.
+.....
 
 FallingMetalCrate1
-Gray Darkgray
-.....
-.111.
-.101.
-.111.
+#625565 #9babb2 #c7dcd0 #ffffff
+.222.
+23221
+22210
+21100
+.000.
 .....
 
 FallingMetalCrate2
-Gray Darkgray
-.....
-.....
-..1..
-.....
-.....
+#625565 #9babb2 #c7dcd0 #ffffff
+.222.
+.210.
+.000.
+
+FallingMetalCrate3
+#625565 #9babb2 #c7dcd0 #ffffff
+..0..
 
 ( The numbers are units )
 Momentum1R
@@ -380,7 +384,7 @@ Crate1 = Crate
 Crate2 = Crate
 
 FallingWoodenCrate = FallingWoodenCrate1 or FallingWoodenCrate2 or FallingWoodenCrate3
-FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2
+FallingMetalCrate = FallingMetalCrate1 or FallingMetalCrate2 or FallingMetalCrate3
 FallingCrate = FallingWoodenCrate or FallingMetalCrate
 FallingPlayer = FallingPlayer1 or FallingPlayer2 or FallingPlayer3
 
@@ -554,7 +558,8 @@ late [ FallingWoodenCrate3 ] -> [ ]
 late [ FallingWoodenCrate2 Pit ] -> [ FallingWoodenCrate3 Pit ] again
 late [ FallingWoodenCrate1 Pit ] -> [ FallingWoodenCrate2 Pit ] again
 late [ WoodenCrate Pit ] -> [ FallingWoodenCrate1 Pit ] again
-late [ FallingMetalCrate2 ] -> [ ]
+late [ FallingMetalCrate3 ] -> [ ]
+late [ FallingMetalCrate2 Pit ] -> [ FallingMetalCrate3 Pit ] again
 late [ FallingMetalCrate1 Pit ] -> [ FallingMetalCrate2 Pit ] again
 late [ MetalCrate Pit ] -> [ FallingMetalCrate1 Pit ] again
 
