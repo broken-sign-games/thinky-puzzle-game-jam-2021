@@ -1,6 +1,8 @@
 title Conservation of Momentum
 author Menderbug
 homepage menderbug.itch.io
+background_color #3e3546
+text_color #8ff8e2
 
 noaction
 
@@ -413,8 +415,6 @@ left [ Wall no _WallEndsD | _WallEndsD ] -> [ Wall _Temp | _WallEndsD ]
 down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 [ _Temp ] -> [ ]
 
-
-
 [ _WallEndsR _WallEndsL _WallEndsU _WallEndsD ] -> [ WallDecoRLUD ]
 [ _WallEndsR _WallEndsL _WallEndsU ] -> [ WallDecoRLU ]
 [ _WallEndsR _WallEndsL _WallEndsD ] -> [ WallDecoRLD ]
@@ -431,6 +431,9 @@ down [ _Temp | _WallEndsL ] -> [ _Temp WallDecoCornerLD | _WallEndsL ]
 [ _WallEndsU ] -> [ WallDecoU ]
 [ _WallEndsD ] -> [ WallDecoD ]
 
+
+( Player can't walk over pits )
+[ > Player | Pit ] -> [ Player | Pit ]
 
 ( Player can push one more crates. )
 [ > Player | Crate ] -> [ > Player | > Crate ]
@@ -601,6 +604,20 @@ LEVELS
 ##..#..###
 ##########
 
+( Introduces dropping several crates into a pit at once )
+
+###############
+###......######
+##..#....__####
+##p.***.o._.###
+#..#..........#
+#..........#..#
+###...........#
+###..........##
+####......#..##
+#######...#####
+###############
+
 ( Introduces momentum transfer + stopping over a pit )
 
 ############
@@ -653,20 +670,6 @@ LEVELS
 ###....#..#####
 ####.p....#####
 ####...########
-###############
-
-( Introduces dropping several crates into a pit at once )
-
-###############
-###......######
-##..#....__####
-##p.***.o._.###
-#..#..........#
-#..........#..#
-###...........#
-###..........##
-####......#..##
-#######...#####
 ###############
 
 message Thank you for playing! :)
