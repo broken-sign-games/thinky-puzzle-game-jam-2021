@@ -571,10 +571,14 @@ down [ no Sand no SandDecoD no Wall no Pit | Sand ] -> [ SandDecoD | Sand ]
 (############ late rules ############)
 
 ( Sound effects )
-late right [ Ball MomentumR | WoodenBall no Momentum ] -> [ Ball MomentumR | WoodenBall ] sfx0
-late left [ Ball MomentumL | WoodenBall no Momentum ] -> [ Ball MomentumL | WoodenBall ] sfx0
-late up [ Ball MomentumU | WoodenBall no Momentum ] -> [ Ball MomentumU | WoodenBall ] sfx0
-late down [ Ball MomentumD | WoodenBall no Momentum ] -> [ Ball MomentumD | WoodenBall ] sfx0
+late right [ WoodenBall MomentumR | WoodenBall no Momentum ] -> [ WoodenBall MomentumR | WoodenBall ] sfx0
+late left [ WoodenBall MomentumL | WoodenBall no Momentum ] -> [ WoodenBall MomentumL | WoodenBall ] sfx0
+late up [ WoodenBall MomentumU | WoodenBall no Momentum ] -> [ WoodenBall MomentumU | WoodenBall ] sfx0
+late down [ WoodenBall MomentumD | WoodenBall no Momentum ] -> [ WoodenBall MomentumD | WoodenBall ] sfx0
+late right [ MetalBall MomentumR | WoodenBall no Momentum ] -> [ MetalBall MomentumR | WoodenBall ] sfx1
+late left [ MetalBall MomentumL | WoodenBall no Momentum ] -> [ MetalBall MomentumL | WoodenBall ] sfx1
+late up [ MetalBall MomentumU | WoodenBall no Momentum ] -> [ MetalBall MomentumU | WoodenBall ] sfx1
+late down [ MetalBall MomentumD | WoodenBall no Momentum ] -> [ MetalBall MomentumD | WoodenBall ] sfx1
 late right [ Ball MomentumR | MetalBall no Momentum ] -> [ Ball MomentumR | MetalBall ] sfx1
 late left [ Ball MomentumL | MetalBall no Momentum ] -> [ Ball MomentumL | MetalBall ] sfx1
 late up [ Ball MomentumU | MetalBall no Momentum ] -> [ Ball MomentumU | MetalBall ] sfx1
@@ -881,8 +885,25 @@ LEVELS
 #...##...#__#
 #############
 
+( Introduces metal balls )
+
+###############
+#....._###..###
+#p.x.x_***..###
+#.............#
+#.............#
+#......####o###
+###############
+
 message Thank you for playing! :)
 
+############
+##..#_###..#
+##.x._***..#
+#.p........#
+#....##....#
+###..#####o#
+############
 
 (
 
