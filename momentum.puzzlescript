@@ -435,6 +435,7 @@ P = Player
 * = WoodenBall
 x = MetalBall
 O = Target
+Q = Target and WoodenBall
 
 Ball = WoodenBall or MetalBall
 Ball1 = Ball
@@ -823,6 +824,17 @@ message If you're stuck, press X three times to skip a level.
 ######.......##
 ###############
 
+#####################
+###p.**..o*....*..###
+###.........._....###
+##########.##########
+##..***.*.o.o**.*..##
+##.................##
+##########.##########
+#..****.**.*.o....*.#
+#...................#
+#####################
+
 ##############
 ###..###...###
 ###.........##
@@ -908,6 +920,14 @@ message If you're stuck, press X three times to skip a level.
 #############
 
 ( Introduces metal balls )
+
+#############
+###..####..##
+#....#.....##
+#...p..#....#
+#.x..o*q*...#
+#...#.....###
+#############
 
 ############
 ##..#_###..#
