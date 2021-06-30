@@ -476,11 +476,14 @@ sfx7 36743507 ( player steps onto sand )
 
 sfx8 59530308 ( ball hits sand )
 
-sfx9 64621908 ( object falls into pit ) ( 89526908 )
+sfx9 96780902 (726108) (83188902) (64621908) ( object falls into pit ) ( 89526908 )
 
 sfx10 19886102 ( player falls  )
 
 endlevel 27401703
+
+( pushing a crate over something? 92610308 )
+( momentum redirection? 93693708 )
 
 ================
 COLLISIONLAYERS
@@ -608,7 +611,7 @@ late right [ Ball MomentumR | Wall ] -> [ Ball MomentumR | Wall ] sfx2
 late left [ Ball MomentumL | Wall ] -> [ Ball MomentumL | Wall ] sfx2
 late up [ Ball MomentumU | Wall ] -> [ Ball MomentumU | Wall ] sfx2
 late down [ Ball MomentumD | Wall ] -> [ Ball MomentumD | Wall ] sfx2
-late [ Ball Pit no FallingBall ] -> [ Ball Pit ] sfx9
+late [ Ball Pit ] -> [ Ball Pit ] sfx9
 late [ Player Pit ] -> [ Player Pit ] sfx10
 late [ Ball Momentum Sand ] -> [ Ball Momentum Sand ] sfx8
 
