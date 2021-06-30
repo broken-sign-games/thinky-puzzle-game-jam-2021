@@ -5,6 +5,7 @@ background_color #3e3546
 text_color #8ff8e2
 
 run_rules_on_level_start
+norepeat_action
 
 ========
 OBJECTS
@@ -518,8 +519,9 @@ RULES
 random [ ] -> [ _Temp ]
 [ LevelSkip ] [ _Temp ] -> [ LevelSkip ] [ ]
 [ ] [ _Temp ] -> [ LevelSkip0 ] [ ]
-[ LevelSkip0 ] [ action Player ] -> [ LevelSkip1 ] [ Player ] message Press X two more times to skip the level.
-[ LevelSkip1 ] [ action Player ] -> [ LevelSkip2 ] [ Player ] message Pressing X one more time will skip the level. I won't judge you, but you will.
+[ LevelSkip ] [ orthogonal Player ] -> [ LevelSkip0 ] [ orthogonal Player ]
+[ LevelSkip0 ] [ action Player ] -> [ LevelSkip1 ] [ Player ]
+[ LevelSkip1 ] [ action Player ] -> [ LevelSkip2 ] [ Player ] message Pressing X one more time will skip the level. I promise I won't judge you.
 [ LevelSkip2 ] [ action Player ] -> win
 
 ( Visuals )
