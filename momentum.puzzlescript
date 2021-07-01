@@ -472,11 +472,13 @@ sfx1 71577900 ( ball hits metal ball )
 
 sfx2 48227904 ( ball hits wall )
 
+sfx3 32279907 ( player pushes ball )
+
 sfx7 36743507 ( player steps onto sand )
 
 sfx8 59530308 ( ball hits sand )
 
-sfx9 96780902 (726108) (83188902) (64621908) ( object falls into pit ) ( 89526908 )
+sfx9 96780902 (75321702) (726108) (83188902) (64621908) ( object falls into pit ) ( 89526908 )
 
 sfx10 19886102 ( player falls  )
 
@@ -575,6 +577,9 @@ down [ no Sand no SandDecoD no Wall no Pit | Sand ] -> [ SandDecoD | Sand ]
 ( Player can push one more balls. )
 [ > Player | Ball ] -> [ > Player | > Ball ]
 [ > Ball1 | Ball2 ] -> [ > Ball1 | > Ball2 ]
+
+( Dynamic sound effects. )
+[ > Ball | no Ball no Wall ] -> [ > Ball | ] sfx3
 
 ( Recover ball movement from existing momentum. )
 [ Ball MomentumR ] -> [ right Ball MomentumR ]
@@ -1012,3 +1017,4 @@ message If you're stuck, press X three times to skip a level.
 ########################
 
 )
+
