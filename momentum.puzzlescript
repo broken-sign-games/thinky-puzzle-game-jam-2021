@@ -536,7 +536,7 @@ random [ ] -> [ _Temp ]
 [ ] [ _Temp ] -> [ LevelSkip0 ] [ ]
 [ LevelSkip ] [ orthogonal Player ] -> [ LevelSkip0 ] [ orthogonal Player ]
 [ LevelSkip0 ] [ action Player ] -> [ LevelSkip1 ] [ Player ]
-[ LevelSkip1 ] [ action Player ] -> [ LevelSkip2 ] [ Player ] message Pressing X one more time will skip the level. I promise I won't judge you.
+[ LevelSkip1 ] [ action Player ] -> [ LevelSkip2 ] [ Player ] message Pressing X or tapping the screen one more time will skip the level. Move to reset the counter.
 [ LevelSkip2 ] [ action Player ] -> win
 
 ( Visuals )
@@ -699,7 +699,7 @@ No FallingBall
 LEVELS
 =======
 
-message If you're stuck, press X three times to skip a level.
+message If you're stuck, press X or tap the screen three times to skip a level.
 
 ( Introduces momentum )
 
