@@ -1,0 +1,634 @@
+title Isaac and the Conservation of Momentum
+author Menderbug
+homepage menderbug.itch.io
+background_color #3e3546
+text_color #8ff8e2
+
+run_rules_on_level_start
+noaction
+
+========
+OBJECTS
+========
+
+Background
+#547e64 #92a984
+00000
+00000
+00100
+00000
+00000
+
+Target
+#8ff8e2
+0000.
+0...0
+0.0.0
+0...0
+.0000
+
+Wall
+#3e3546
+00000
+00000
+00000
+00000
+00000
+
+Sand
+#fbff86 #d5e04b
+00000
+00000
+00100
+00000
+00000
+
+Player
+#2e222f #3e3546 #7f708a #c7dcd0 #ffffff #fdcbb0 #323353
+.333.
+34433
+36563
+35553
+.021.
+
+
+Pit
+#1a1518
+
+WoodenBall
+#7a3045 #9e4539 #cd683d #e6904e
+.222.
+23221
+22210
+21100
+.000.
+
+
+MetalBall
+#625565 #9babb2 #c7dcd0 #ffffff
+.222.
+23221
+22210
+21100
+.000.
+
+( The numbers are units )
+Momentum1R
+transparent
+
+Momentum1L
+transparent
+
+Momentum1U
+transparent
+
+Momentum1D
+transparent
+
+Momentum2R
+transparent
+
+Momentum2L
+transparent
+
+Momentum2U
+transparent
+
+Momentum2D
+transparent
+
+LevelSkip0
+transparent
+
+LevelSkip1
+transparent
+
+LevelSkip2
+transparent
+
+_WallEndsR
+pink
+
+_WallEndsL
+pink
+
+_WallEndsU
+pink
+
+_WallEndsD
+pink
+
+_Temp
+pink
+
+=======
+LEGEND
+=======
+
+. = Background
+~ = Sand
+_ = Pit
+# = Wall
+P = Player
+* = WoodenBall
+x = MetalBall
+O = Target
+Q = Target and WoodenBall
+
+Ball = WoodenBall or MetalBall
+Ball1 = Ball
+Ball2 = Ball
+
+Momentum1 = Momentum1R or Momentum1L or Momentum1U or Momentum1D
+Momentum2 = Momentum2R or Momentum2L or Momentum2U or Momentum2D
+MomentumR = Momentum1R or Momentum2R
+MomentumL = Momentum1L or Momentum2L
+MomentumU = Momentum1U or Momentum2U
+MomentumD = Momentum1D or Momentum2D
+Momentum = Momentum1 or Momentum2
+
+WallEnds = _WallEndsR or _WallEndsL or _WallEndsU or _WallEndsD
+
+LevelSkip = LevelSkip0 or LevelSkip1 or LevelSkip2
+
+=======
+SOUNDS
+=======
+
+Player move 39983908
+
+sfx0 61949504 ( ball hits wooden ball )
+
+sfx1 71577900 ( ball hits metal ball )
+
+sfx2 48227904 ( ball hits wall )
+
+sfx3 32279907 ( player pushes ball )
+
+sfx7 36743507 ( player steps onto sand )
+
+sfx8 59530308 ( ball hits sand )
+
+sfx9 96780902 (75321702) (726108) (83188902) (64621908) ( object falls into pit ) ( 89526908 )
+
+sfx10 19886102 ( player falls  )
+
+endlevel 27401703
+
+( pushing a crate over something? 92610308 )
+( momentum redirection? 93693708 )
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Sand
+Pit
+Target
+Player, Wall, Ball
+Momentum
+LevelSkip
+_WallEndsR
+_WallEndsL
+_WallEndsU
+_WallEndsD
+_Temp
+
+======
+RULES
+======
+
+( Player can push one more balls. )
+[ > Player | Ball ] -> [ > Player | > Ball ]
+[ > Ball1 | Ball2 ] -> [ > Ball1 | > Ball2 ]
+
+( Recover ball movement from existing momentum. )
+[ Ball MomentumR ] -> [ right Ball MomentumR ]
+[ Ball MomentumL ] -> [ left Ball MomentumL ]
+[ Ball MomentumU ] -> [ up Ball MomentumU ]
+[ Ball MomentumD ] -> [ down Ball MomentumD ]
+
+( Add momentum to moving balls. )
+[ right WoodenBall ] -> [ right WoodenBall right Momentum1R ]
+[ left WoodenBall ] -> [ left WoodenBall left Momentum1L ]
+[ up WoodenBall ] -> [ up WoodenBall up Momentum1U ]
+[ down WoodenBall ] -> [ down WoodenBall down Momentum1D ]
+[ right MetalBall ] -> [ right MetalBall right Momentum2R ]
+[ left MetalBall ] -> [ left MetalBall left Momentum2L ]
+[ up MetalBall ] -> [ up MetalBall up Momentum2U ]
+[ down MetalBall ] -> [ down MetalBall down Momentum2D ]
+
+(############ late rules ############)
+
+( Sand absorbs momentum of entering balls. )
+late [ Ball Momentum Sand ] -> [ Ball Sand ]
+
+( Transfer momentum through stationary balls, a la Newton's Cradle.
+  Metal balls can store two units of momentum.
+  Walls absorb momentum. )  
+late right [ Ball1 Momentum1R | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1R ]
++ late right [ Ball Momentum1R | MetalBall Momentum1R ] -> [ Ball | MetalBall Momentum2R ]
++ late right [ MetalBall Momentum2R | Ball no Momentum ] -> [ MetalBall Momentum1R | Ball Momentum1R ]
++ late right [ MetalBall Momentum2R | MetalBall Momentum1R ] -> [ MetalBall Momentum1R | MetalBall Momentum2R ]
++ late right [ Ball MomentumR | Wall ] -> [ Ball | Wall ]
+late left [ Ball1 Momentum1L | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1L ]
++ late left [ Ball Momentum1L | MetalBall Momentum1L ] -> [ Ball | MetalBall Momentum2L ]
++ late left [ MetalBall Momentum2L | Ball no Momentum ] -> [ MetalBall Momentum1L | Ball Momentum1L ]
++ late left [ MetalBall Momentum2L | MetalBall Momentum1L ] -> [ MetalBall Momentum1L | MetalBall Momentum2L ]
++ late left [ Ball MomentumL | Wall ] -> [ Ball | Wall ]
+late up [ Ball1 Momentum1U | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1U ]
++ late up [ Ball Momentum1U | MetalBall Momentum1U ] -> [ Ball | MetalBall Momentum2U ]
++ late up [ MetalBall Momentum2U | Ball no Momentum ] -> [ MetalBall Momentum1U | Ball Momentum1U ]
++ late up [ MetalBall Momentum2U | MetalBall Momentum1U ] -> [ MetalBall Momentum1U | MetalBall Momentum2U ]
++ late up [ Ball MomentumU | Wall ] -> [ Ball | Wall ]
+late down [ Ball1 Momentum1D | Ball2 no Momentum ] -> [ Ball1 | Ball2 Momentum1D ]
++ late down [ Ball Momentum1D | MetalBall Momentum1D ] -> [ Ball | MetalBall Momentum2D ]
++ late down [ MetalBall Momentum2D | Ball no Momentum ] -> [ MetalBall Momentum1D | Ball Momentum1D ]
++ late down [ MetalBall Momentum2D | MetalBall Momentum1D ] -> [ MetalBall Momentum1D | MetalBall Momentum2D ]
++ late down [ Ball MomentumD | Wall ] -> [ Ball | Wall ]
+
+( Metal balls require two units of momentum to keep moving. )
+late [ MetalBall Momentum1 ] -> [ MetalBall ]
+
+( Drop balls into pits. )
+late [ WoodenBall Pit ] -> [ Pit ]
+late [ MetalBall Pit ] -> [ Pit ]
+
+( Drop player into pits. )
+late [ Player Pit ] -> [ Pit ]
+
+( Remove stray momentum. )
+late [ Momentum no Ball ] -> [ ]
+
+( If any momentum is left, run another turn. )
+late [ Momentum ] -> [ Momentum ] again
+
+==============
+WINCONDITIONS
+==============
+
+All Target on Ball
+
+No Momentum
+
+=======
+LEVELS
+=======
+
+message If you're stuck, press X three times to skip a level.
+
+( Introduces momentum )
+
+###########
+#...#######
+#.p.#######
+#...#######
+##.########
+##.####...#
+#.*..o..#.#
+#...#.....#
+###...#####
+###########
+
+( Introduces momentum transfer )
+
+###########
+###...oo..#
+###.*.....#
+#....*..#.#
+#..p......#
+##.....####
+##..#######
+###########
+
+########
+###...##
+#..*p.##
+#.##*.##
+#..#.o##
+##....##
+#####.##
+#####..#
+########
+
+###########
+#...*..o..#
+#.p.*.....#
+#...*.....#
+######...##
+###########
+
+###########
+###......##
+#..*.o.*.##
+#.........#
+##.*.o.p..#
+##......###
+###########
+
+###########
+######..###
+######....#
+###.......#
+#...o....##
+#..*.*...##
+##..p....##
+##..###..##
+###########
+
+( Introduces pushing multiple balls at once )
+
+#########
+#....o..#
+#.###o#.#
+#.###...#
+#.**..p##
+####...##
+#########
+
+###########
+###......o#
+#........o#
+#.p.***..o#
+#.......###
+###########
+
+##########
+####o#o#o#
+####.#.#.#
+#........#
+#..#...p.#
+##.*....##
+##.*....##
+###.*..###
+###..#####
+##########
+
+( Introduces pits )
+
+##########
+#P.*...o_#
+###.#....#
+##....#..#
+##.*.....#
+#.......##
+#....#..##
+###....###
+##########
+
+( Introduces stopping over a pit )
+
+##########
+######o###
+######.###
+###......#
+#...#....#
+#.p...._##
+#..#.*...#
+##..*....#
+##......##
+##########
+
+( Introduces dropping several balls into a pit at once )
+
+#############
+###......####
+##..#....__##
+##p.***.o._.#
+#..#........#
+#....#.....##
+###........##
+###.......###
+###.......###
+#######...###
+#############
+
+( Introduces momentum transfer to stop over a pit )
+
+############
+#####..#####
+#####......#
+###.....#..#
+###.*......#
+#....o..p..#
+#.*..._...##
+####...#..##
+####.*....##
+####.....###
+############
+
+( Introduces momentum transfer of multiple balls )
+
+###############
+#.....o......##
+#p####.#####.##
+#..**...***..o#
+######.#####.##
+######.......##
+###############
+
+( meh
+
+#####################
+###p.**..o*....*..###
+###.........._....###
+##########.##########
+##..***.*.o.o**.*..##
+##.................##
+##########.##########
+#..****.**.*.o....*.#
+#...................#
+#####################
+)
+
+##############
+###..###...###
+###.........##
+##.......*..##
+##.........###
+#..##...######
+#..#..####___#
+#....._***.o_#
+#...*.####___#
+###.....######
+###..#.p.#####
+####.....#####
+##############
+
+###############
+#####_#_#_#####
+#####o#o#o#####
+#####o#o#o#####
+#####o#o#o#####
+##..#o#o#o#..##
+##...........##
+##.#.*****.#.##
+#.........#...#
+#.p..*****....#
+#...#.........#
+###..*****..###
+####.......####
+###############
+###############
+
+( Introduces sand )
+
+###########
+#..#.o...##
+#......p.##
+##........#
+#...~.....#
+#...~~..#.#
+###...*...#
+###.....###
+###########
+
+###########
+#...#o#~~.#
+#.~~..~~..#
+#.._..~~.##
+##.~~._..##
+##~~..p.~.#
+#.*.~~__~.#
+##....__..#
+###########
+
+############
+#...##.....#
+#.*......~.#
+#.....#..~.#
+#.##.__.*..#
+#...._~...o#
+#....__~.p.#
+##.~~....._#
+##....######
+############
+
+##############
+######....####
+##..##.......#
+##.p....*~...#
+#........~.*##
+#...*__#_...##
+#.~..#*o_...##
+##..._..#....#
+####._#__..#.#
+####.........#
+#######.....##
+#######...####
+##############
+
+( Introduces interaction of sand with multiple balls )
+
+###########
+#...#######
+#.#....*..#
+#...##.##.#
+##.....~..#
+####*__.###
+##.p..*...#
+##....o...#
+###########
+
+#############
+####p.~~#####
+##....~~~.###
+##...*....###
+#...*.......#
+#.#....~..o_#
+#...##...#__#
+#############
+
+( Introduces metal balls )
+
+#############
+###..####..##
+#..p.#.....##
+#......#....#
+#.x..o*q*...#
+#...#.....###
+#############
+
+################
+##...____o__####
+##.#.____.__####
+##..._***._#####
+#..p..###._#####
+#.....###._....#
+###..........#.#
+###.**..x_.....#
+###..#..__.#####
+####...#########
+################
+
+############
+##..#_###..#
+##.x._***..#
+#.p........#
+#....##....#
+###..#####o#
+############
+
+##########
+#...######
+#.#.....##
+#...*....#
+#p#..____#
+#..*._x.o#
+##...____#
+##.#.....#
+##...#####
+##########
+
+#############
+##......#####
+##.###....#_#
+##.***.oooo_#
+#...p......_#
+#.....x....##
+#####......##
+#############
+
+( Introduces metal balls on sand )
+
+############
+#####___####
+#oo**_~_...#
+#_____._...#
+#.......p..#
+#..*x*.....#
+#~~........#
+##~~~~~...##
+##~~~~~~..##
+############
+
+##############
+##___##......#
+##*#*#.._____#
+#.....oo~o*q.#
+#.~x~..._____#
+#.*.*.p......#
+#......#######
+##############
+
+( Victory lap )
+
+#######################################
+#p___o__............................__#
+#.x_x.x_*****.*.*..*..***.*.*.***.*.__#
+##.*_*._*.*..*.*.*.*.*.*.*.*.*...*..__#
+###.x_x_**.*..***.***.*.*.**..***.*.__#
+####.*._*.*..*.*.*.*.*.*.*.*...*....__#
+#####.x_**.*..*.*.*.*.*.*.*.*.*xo*..__#
+######___...........................__#
+#######################################
+
+(
+
+########################
+#O.P..***.****.*._.*...#
+########################
+
+)
+
