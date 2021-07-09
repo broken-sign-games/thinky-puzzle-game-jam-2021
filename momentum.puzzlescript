@@ -5,7 +5,7 @@ background_color #3e3546
 text_color #8ff8e2
 
 run_rules_on_level_start
-norepeat_action
+noaction
 
 ========
 OBJECTS
@@ -399,15 +399,6 @@ transparent
 Momentum2D
 transparent
 
-LevelSkip0
-transparent
-
-LevelSkip1
-transparent
-
-LevelSkip2
-transparent
-
 _WallEndsR
 pink
 
@@ -457,8 +448,6 @@ Momentum = Momentum1 or Momentum2
 WallEnds = _WallEndsR or _WallEndsL or _WallEndsU or _WallEndsD
 WallDeco = WallDecoR or WallDecoL or WallDecoU or WallDecoD or WallDecoRL or WallDecoUD or WallDecoRU or WallDecoRD or WallDecoLU or WallDecoLD or WallDecoRLU or WallDecoRLD or WallDecoUDR or WallDecoUDL or WallDecoRLUD
 WallDecoCorner = WallDecoCornerRU or WallDecoCornerRD or WallDecoCornerLU or WallDecoCornerLD
-
-LevelSkip = LevelSkip0 or LevelSkip1 or LevelSkip2
 
 =======
 SOUNDS
@@ -519,7 +508,6 @@ WallDecoCornerRD
 WallDecoCornerLU
 WallDecoCornerLD
 Momentum
-LevelSkip
 _WallEndsR
 _WallEndsL
 _WallEndsU
@@ -529,15 +517,6 @@ _Temp
 ======
 RULES
 ======
-
-( Skipping levels )
-random [ ] -> [ _Temp ]
-[ LevelSkip ] [ _Temp ] -> [ LevelSkip ] [ ]
-[ ] [ _Temp ] -> [ LevelSkip0 ] [ ]
-[ LevelSkip ] [ orthogonal Player ] -> [ LevelSkip0 ] [ orthogonal Player ]
-[ LevelSkip0 ] [ action Player ] -> [ LevelSkip1 ] [ Player ]
-[ LevelSkip1 ] [ action Player ] -> [ LevelSkip2 ] [ Player ] message Pressing X or tapping the screen one more time will skip the level. Move to reset the counter.
-[ LevelSkip2 ] [ action Player ] -> win
 
 ( Visuals )
 up [ Pit no PitDeco | no Pit ] -> [ Pit PitDeco | ]
@@ -698,8 +677,6 @@ No FallingBall
 =======
 LEVELS
 =======
-
-message If you're stuck, press X or tap the screen three times to skip a level.
 
 ( Introduces momentum )
 
@@ -1068,18 +1045,6 @@ message If you're stuck, press X or tap the screen three times to skip a level.
 ##.*.x.....#
 ##.....#####
 ############
-
-################
-#######.....####
-#######.......##
-#...#.........##
-#.#...o.p..#...#
-#............#.#
-##.#.x.*.......#
-##.#......######
-##.......#######
-######...#######
-################
 
 ############
 ############
